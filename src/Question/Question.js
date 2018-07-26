@@ -8,8 +8,12 @@ const Question = (props) => // why doesn't it work if I put a curly brace here
                 <p>{index + 1}. {question}</p>
 
                 <AnswerChoices
+                    correctAnswers={props.correctAnswers}
+                    userAnswers={props.userAnswers}
+                    key={index}
                     index={index} // try just index answersArray is the array of ALL answers
-                    answersArray={props.answersArray} /> 
+                    answerChoicesArray={props.answerChoicesArray}
+                    updateUserAnswersHandler={props.updateUserAnswersHandler} /> 
             </div>
     );
 })

@@ -1,46 +1,30 @@
 import React from 'react';
 import SpecificAnswerChoice from './SpecificAnswerChoice/SpecificAnswerChoice'
 
-const AnswerChoices = (props) => {
+/* 
+A solution to check for correct answers:
 
+Have the answers array in this file. Pass each correct answer to a specificAnswerChoice file accordring to its index
+In each SpecificAnswerChoice file, check if the ans for that question is correct and update Score state in App.js using a handler
+*/
+
+// AnswerChoices: these are the 5 answers for the 5 questions
+const AnswerChoices = (props) => {
+    // console.log(props.answerChoicesArray[props.index]);
         return (
             // 5 answers array for each question
             <div>
                 <ul>
-                <SpecificAnswerChoice 
-                    answers={props.answersArray[props.index]} />
+                <SpecificAnswerChoice
+                    correctAnswer={props.correctAnswers[props.index]}
+                    key={props.index + props.answerChoicesArray[props.index]}
+                    index={props.index} // 0, 1, 2, 3, 4
+                    answers={props.answerChoicesArray[props.index]}
+                    userAnswers={props.userAnswers}
+                    updateUserAnswersHandler={props.updateUserAnswersHandler}/>
                 </ul>
             </div>
-            
         )
     }
 
 export default AnswerChoices;
-
-        // <div>
-            //     <ul>
-            //         <li><span>{props.answersArray[props.index][0]}</span></li>
-            //         <li><span>{props.answersArray[props.index][1]}</span></li>
-            //         <li><span>{props.answersArray[props.index][2]}</span></li>
-            //         <li><span>{props.answersArray[props.index][3]}</span></li>
-            //         <li><span>{props.answersArray[props.index][4]}</span></li>
-            //     </ul>
-            // </div>
-
-        // return(
-        //     <p>{props.answersArray}</p>
-        // )
-
-        // <div>
-        //     <ul>
-        //         {
-        //             props.answersArray[props.index].map(specificAnswerChoice => {
-        //                 return(<p>{specificAnswerChoice}</p>)
-        //             })
-        //         }
-        //     </ul>
-        // </div>
-
-        // for(let i=0; i<props.answersArray[props.index].length; i++) {
-        //     return <p>{props.answersArray[props.index][i]}</p>
-        // }
