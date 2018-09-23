@@ -1,0 +1,18 @@
+#score-page {
+    height: 250px;
+    width: 500px;
+    margin: auto;
+    text-align: center;
+}
+
+#caption {
+    display: table-cell;
+    height: 100px;
+    width: 500px;
+    background: rgb(241, 244, 241);
+}
+
+#score-page p {
+    font-size: 80px;
+    margin-top: 40px;
+}

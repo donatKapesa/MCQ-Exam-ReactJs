@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
+import { Route, Switch} from 'react-router-dom';
 import './App.css';
-import Title from './Title/Title';
-import Question from './Question/Question';
-import SubmitButton from './SubmitButton/SubmitButton';
+import Test from './Test/Test';
+import Score from './Score/Score';
 
 class App extends Component {
   state = {
     questionArray: [
       "What is 9+10",
       "How many goals did Ronaldo score against Spain in the World Cup 2018",
-      "Who Stole Ronaldo's (CR7) greates ever goal?",
+      "Who Stole Ronaldo's (CR7) greatest ever goal?",
       "Which one of these players ruined the NBA",
       "Who is currently number 1 in the internet L rankings?"
   ],
@@ -36,7 +36,17 @@ class App extends Component {
       userAnswers: newArray
     });
   }
+  // This has to be inside completition call back or else it'll be called before setState above is completed
+  // Note that setState is asynchronous
 
+  // if(counter < 5) {
+  //   alert("You're dumb asf. Please leave. Score: " + this.state.score);
+  // } else {
+  //   alert("Welcome to NASA. score: " + this.state.score);
+  // }
+
+
+// later, try to pass score using query
 displayResultsHandler = () => {
     this.setState(
         // Updater
@@ -51,60 +61,30 @@ displayResultsHandler = () => {
             // console.log("current score is (before updated): " + this.state.score);
             return {score: counter};
             
-        },
-        // Completion callback BUT componenetDidUpdate is RECOMMENDED. See answer on my stack overflow answer
-        () => {
-            // console.log("counter: " + counter);
-            console.log("User Answers are: " + this.state.userAnswers);
-            console.log("score: " + this.state.score); // For some reason, this is always zero
-
-            if(this.state.score < 5) {
-              alert("You're dumb. Please leave. Score: " + this.state.score);
-            } else {
-              alert("Welcome to NASA. Score: " + this.state.score);
-            }
         }
-    );
+    ), window.location.replace(window.location.href + "score");
 };
 
-  // componentDidUpdate() {
-  //   // can throw the if statement + alert here
-  //   console.log("[inside ComponentDidUpdate]. Score is: " + this.state.score)
-  // }
-
-  // This has to be inside completition call back or else it'll be called before setState above is completed
-  // Not that setState is asynchronous
-
-  // if(counter < 5) {
-  //   alert("You're dumb asf. Please leave. Score: " + this.state.score);
-  // } else {
-  //   alert("Welcome to NASA. score: " + this.state.score);
-  // }
-
-  render() {
-    // console.log(userAnswers); How do I pass this as a prop? this.userAnswers? nope. Therefore it has to be a state
-
-    // console.log("User Answers are: " + this.state.userAnswers); // this re-renders at every single click smh
-    return (
-      // How can I get rid of the key warning on console
-        <div className="App">
-          <div className="container">
-            
-              <Title/>
-              <h2>Only the most genius of individuals will pass</h2>
-              <hr/>
-              <Question
-                correctAnswers={this.state.correctAnswers}
-                updateUserAnswersHandler={this.updateUserAnswersHandler}
-                userAnswers={this.state.userAnswers}
-                questionArray={this.state.questionArray}
-                answerChoicesArray={this.state.answerChoicesArray} />
-              <SubmitButton
-                clicked = {this.displayResultsHandler} />
-          </div>
-        </div>
-    );
-  }
+render() {
+  return(
+    <div className="App">
+      <Switch>
+        <Route path="/score" render={(props) => <Score 
+                                                  {...props} 
+                                                  score={this.state.score} /> } />
+        <Route path="/" exact render={(props) => <Test 
+                                                    {...props} 
+                                                    score={this.state.score}
+                                                    correctAnswers={this.state.correctAnswers}
+                                                    updateUserAnswersHandler={this.updateUserAnswersHandler}
+                                                    userAnswers={this.state.userAnswers}
+                                                    questionArray={this.state.questionArray}
+                                                    answerChoicesArray={this.state.answerChoicesArray}
+                                                    displayResultsHandler={this.displayResultsHandler} /> } />
+      </Switch>
+    </div>
+  );
+}
 }
 
 export default App;
